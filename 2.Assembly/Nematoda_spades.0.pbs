@@ -1,0 +1,96 @@
+#!/bin/sh
+#PBS -N Nema_spades
+#PBS -l walltime=72:00:00
+#PBS -l select=1:ncpus=24:mem=256gb
+
+# =======================
+# Genome Assembly Pipeline for Nematoda WGS Data
+# - Removes duplicates, trims, normalizes, and assembles genomes using SPAdes
+# - Output: Assembled scaffolds for each sample in ./genome_assembly
+# =======================
+
+# Load required modules
+module load lang/python/anaconda/3.8.8-2021.05-2.5
+module load apps/spades/3.15.0
+# module load apps/fastqc/0.11.9  # Uncomment to enable FastQC for quality control
+
+# Move to working directory containing WGS data
+cd $WORK/nematoda/data/wgs
+mkdir -p ./genome_assembly
+DIR_bbmap=/To/Your/Directory/bbmap  # Path to BBMap tools
+
+# Function: BBtools
+# Performs duplicate removal, quality trimming, and read normalization
+# Arguments:
+#   $1 - Sample name
+#   $2 - Forward reads file
+#   $3 - Reverse reads file
+BBtools(){
+    mkdir ./$1.BBout
+    DIR_BBout="./$1.BBout"
+    # Input fastq files
+    fq1=$2
+    fq2=$3
+
+    # 1. Remove duplicate reads (both mates must match)
+    out_dupl1=$DIR_BBout/Seq_1.2rmdup.fq.gz
+    out_dupl2=$DIR_BBout/Seq_2.2rmdup.fq.gz
+    $DIR_bbmap/clumpify.sh in1=$fq1 in2=$fq2 out1=$out_dupl1 out2=$out_dupl2 pigz dedupe 
+
+    # 2. Quality trimming (remove low-quality bases, short reads, excessive Ns)
+    out_trim1=$DIR_BBout/Seq_1.3qtrim.fq.gz
+    out_trim2=$DIR_BBout/Seq_2.3qtrim.fq.gz
+    $DIR_bbmap/bbduk.sh in1=$out_dupl1 in2=$out_dupl2 out1=$out_trim1 out2=$out_trim2 pigz ordered qtrim=rl trimq=15 minlen=100 ecco=t maxns=5 
+
+    # 3. Normalize read depth (reduce coverage to target, remove low-abundance reads)
+    out_norm1=$DIR_BBout/Seq_1.4norm.fq.gz
+    out_norm2=$DIR_BBout/Seq_2.4norm.fq.gz
+    $DIR_bbmap/bbnorm.sh in1=$out_trim1 in2=$out_trim2 out1=$out_norm1 out2=$out_norm2 target=10 min=2 histcol=2 khist=khist.txt peaks=peaks.txt
+
+    # Remove intermediate files to save space
+    rm $out_dupl1 $out_dupl2 $out_trim1 $out_trim2
+
+    # Rename normalized files for SPAdes input
+    mv $out_norm1 $DIR_BBout/$fq1.gz
+    mv $out_norm2 $DIR_BBout/$fq2.gz
+}
+
+# Generate list of sample names (strip suffix from *_1.fastq)
+wgs_list=$(ls *_1.fastq | sed -e "s/.dna_1.fastq//g")
+
+# ===== Multithread Preparation (Commented Out) =====
+# tmp_fifofile="/tmp/$$.fifo"
+# trap "exec 9>&-;exec 9<&-;exit 0" 2
+# mkfifo $tmp_fifofile
+# exec 9<>$tmp_fifofile 
+# # Bind file descriptor 9 to FIFO for thread control (read/write)
+# # All operations on fd 9 are equivalent to operations on the FIFO pipe
+# rm $tmp_fifofile
+# for ((i=1;i<=9;i++))
+# do
+#     echo >&9
+# done
+
+# Main loop: process each sample
+for nwgs in $wgs_list
+do
+    # read -u9  # For multithreading (commented out)
+    # {
+    # Run BBtools preprocessing for each sample
+    BBtools $nwgs $nwgs.dna_1.fastq $nwgs.dna_2.fastq
+
+    # Run SPAdes genome assembler
+    python3 /sw/apps/SPAdes-3.15.0-Linux/bin/spades.py -1 ./$nwgs.BBout/$nwgs.dna_1.fastq.gz -2 ./$nwgs.BBout/$nwgs.dna_2.fastq.gz -o "$nwgs"_genome -t 24 --isolate >> spades.log 2>&1 && 
+
+    # Copy assembled scaffolds to output directory
+    cp ./${nwgs}_genome/scaffolds.fasta ./genome_assembly/${nwgs}_scaffolds.fasta
+
+    # Remove temporary directory for this sample
+    rm -R ./$nwgs.BBout
+
+    echo "XXX>>> Assembling $nwgs job is done."
+
+    # echo >&9  # For multithreading (commented out)
+    # } &   
+done
+# wait  # Wait for all background jobs (if multithreading enabled)

@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv/
+venv/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# System
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/

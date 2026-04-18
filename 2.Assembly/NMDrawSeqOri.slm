@@ -1,0 +1,42 @@
+#!/bin/sh
+#SBATCH --job-name=NMDrawSeqOri
+#SBATCH --time=72:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=128000mb
+
+# Set aliases for Python
+alias python='/To/Your/Directory/miniconda3/bin/python3.9'
+alias python3='/To/Your/Directory/miniconda3/bin/python3.9'
+# Update PATH environment variable to include Miniconda paths
+export PATH=$PATH:/To/Your/Directory/miniconda3/bin:/To/Your/Directory/miniconda3/pkgs
+
+# Change to the RNA-seq data directory
+cd /To/Your/Directory/nematoda/data/rnaseq
+DIR_cur=$(pwd)  # Current directory
+DIR_dec=$DIR_cur/decontamination  # Directory for decontaminated data
+DIR_Trc=$DIR_cur/TranscriptContents  # Output directory for transcript contents
+
+# Create the transcript contents directory if it does not exist
+if [ ! -d $DIR_Trc ]; then 
+    mkdir $DIR_Trc
+fi
+
+# List the decontaminated RNA-seq files
+rnaseq_list=$(ls ./decontamination/*_trinity.Trinity.decontX | sed -e "s/.\/decontamination\///g")
+
+# Log the start of the drawing process
+echo -e "#######################\nDrawing the Origin of Sequences...\n$(date)\n#######################\n\n" > SeqOriRNA.log
+
+# Iterate over each RNA-seq file and create plots
+for nrna in $rnaseq_list
+do
+    echo -e "Drawing $nrna ...\n$(date)\n" >> SeqOriRNA.log
+    # Call the plotting script and log the output
+    /To/Your/Directory/nematoda/data/SeqOriginPiePlot.py --infile "$DIR_dec"/"$nrna" --out $DIR_Trc >> SeqOriRNA.log 2>&1 && 
+    echo -e "Finished $nrna ...\n$(date)\n" >> SeqOriRNA.log
+done
+
+# Log the completion of the drawing process
+echo -e "#######################\nAll drawings are done.\n$(date)\n#######################\n\n" >> SeqOriRNA.log

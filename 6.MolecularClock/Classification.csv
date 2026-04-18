@@ -1,0 +1,185 @@
+﻿Tip_label,Family,Order,Clade,Class,Phylum
+PF_Amphimedon_queenslandica,Niphatidae,Haplosclerida,Porifera,Demospongiae,Porifera
+CN_Nematostella_vectensis,Edwardsiidae,Actiniaria,Cnidaria,Anthozoa,Cnidaria
+ED_Anneissia_japonica,Comatulidae,Comatulida,Echinodermata,Crinoidea,Echinodermata
+PH_Echinococcus_granulosus,Taeniidae,Cyclophyllidea,Platyhelminthes,Cestoda,Platyhelminthes
+PH_Opisthorchis_felineus,Opisthorchiidae,Opisthorchiida,Platyhelminthes,Trematoda,Platyhelminthes
+ML_Mercenaria_mercenaria,Veneridae,Venerida,Mollusca,Bivalvia,Mollusca
+ML_Octopus_sinensis,Octopodidae,Octopoda,Mollusca,Cephalopoda,Mollusca
+ML_Acanthochitona_rubrolineata,Acanthochitonidae,Chitonida,Mollusca,Polyplacophora,Mollusca
+AN_Helobdella_robusta,Glossiphoniidae,Rhynchobdellida,Annelida,Clitellata,Annelida
+KR_Pycnophyes_sp,Pycnophyidae,Allomalorhagida,Kinorhyncha,Allomalorhagida,Kinorhyncha
+PA_Priapulus_caudatus,Priapulidae,Priapulimorphida,Priapulida,Priapulimorpha,Priapulida
+PA_Meiopriapulus_fijiensis,Tubiluchidae,Priapulimorphida,Priapulida,Priapulimorpha,Priapulida
+NM_Gordius_sp,Gordiidae,Gordea,Nematomorpha,Gordioida,Nematomorpha
+NM_Paragordius_varius,Gordiidae,Gordea,Nematomorpha,Gordioida,Nematomorpha
+NM_Nectonema_munidae,Nectonematidae,Nectonematoida,Nematomorpha,Nectonematoida,Nematomorpha
+OP_Epiperipatus_trinidadensis,Peripatidae,Euonychophora,Onychophora,Udeonychophora,Onychophora
+TG_Hypsibius_dujardini,Hypsibiidae,Parachela,Tardigrada,Eutardigrada,Tardigrada
+TG_Ramazzottius_varieornatus,Ramazzottiidae,Parachela,Tardigrada,Eutardigrada,Tardigrada
+TG_Richtersius_coronifer,Richtersiusidae,Parachela,Tardigrada,Eutardigrada,Tardigrada
+AP_Stegodyphus_dumicola,Eresidae,Araneae,Arthropoda,Arachnida,Arthropoda
+AP_Daphnia_magna,Daphniidae,Diplostraca,Arthropoda,Branchiopoda,Arthropoda
+AP_Sinella_curviseta,Entomobryidae,Entomobryomorpha,Arthropoda,Collembola,Arthropoda
+AP_Megajapyx_major,Japygidae,Diplura,Arthropoda,Entognatha,Arthropoda
+AP_Machilis_hrabei,Machilidae,Archaeognatha,Arthropoda,Insecta,Arthropoda
+AP_Tribolium_castaneum,Tenebrionidae,Coleoptera,Arthropoda,Insecta,Arthropoda
+AP_Timema_cristinae,Timematidae,Phasmatodea,Arthropoda,Insecta,Arthropoda
+AP_Eriocheir_sinensis,Varunidae,Decapoda,Arthropoda,Malacostraca,Arthropoda
+AP_Meridionale_flava,Callipallenidae,Pantopoda,Arthropoda,Pycnogonida,Arthropoda
+Odontophora_sp,Axonolaimidae,Araeolaimida,Chromadoria (basal),Araeolaimida,Chromadoria
+Dorylaimopsis_sp,Comesomatidae,Araeolaimida,Chromadoria (basal),Araeolaimida,Chromadoria
+Euchromadora_sp,Chromadoridae,Chromadorida,Chromadoria (basal),Chromadorida,Chromadoria
+Pomponema_sp,Cyatholaimidae,Chromadorida,Chromadoria (basal),Chromadorida,Chromadoria
+Halichoanolaimus_dolichurus,Selachinematidae,Chromadorida,Chromadoria (basal),Chromadorida,Chromadoria
+Chromadoropsis_vivipara,Desmodoridae,Desmodorina,Chromadoria (basal),Desmodorida,Chromadoria
+Laxus_oneistus,Desmodoridae,Desmodorina,Chromadoria (basal),Desmodorida,Chromadoria
+Leptonemella_sp,Desmodoridae,Desmodorina,Chromadoria (basal),Desmodorida,Chromadoria
+Stilbonema_sp,Desmodoridae,Desmodorina,Chromadoria (basal),Desmodorida,Chromadoria
+Paradraconema_sp,Draconematidae,Desmodorina,Chromadoria (basal),Desmodorida,Chromadoria
+Tricoma_sp,Desmoscolecidae,Desmoscolecida,Chromadoria (basal),Desmoscolecida,Chromadoria
+Linhomoeidae_sp,Linhomoeidae,Linhomoeina,Chromadoria (basal),Monhysterida,Chromadoria
+Siphonolaimus_sp,Siphonolaimidae,Linhomoeina,Chromadoria (basal),Monhysterida,Chromadoria
+Gammarinema_sp,Monhysteridae,Monhysterina,Chromadoria (basal),Monhysterida,Chromadoria
+Halomonhystera_disjuncta,Monhysteridae,Monhysterina,Chromadoria (basal),Monhysterida,Chromadoria
+Halomonhystera_sp,Monhysteridae,Monhysterina,Chromadoria (basal),Monhysterida,Chromadoria
+Monhystera_sp,Monhysteridae,Monhysterina,Chromadoria (basal),Monhysterida,Chromadoria
+Sphaerolaimus_sp,Sphaerolaimidae,Monhysterina,Chromadoria (basal),Monhysterida,Chromadoria
+Ceramonema_sp,Ceramonematidae,Ceramonematina,Chromadoria (basal),Plectida,Chromadoria
+Neocamacolaimus_parasiticus,Camacolaimidae,Plectina,Chromadoria (basal),Plectida,Chromadoria
+Stephanolaimus_elegans,Camacolaimidae,Plectina,Chromadoria (basal),Plectida,Chromadoria
+Anaplectus_granulosus,Plectidae,Plectina,Chromadoria (basal),Plectida,Chromadoria
+Plectus_sambesii,Plectidae,Plectina,Chromadoria (basal),Plectida,Chromadoria
+Bunonema_sp,Bunonematidae,Bunonematomorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Allodiplogaster_sudhausi,Diplogastridae,Diplogastromorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Levipalatum_texanum,Diplogastridae,Diplogastromorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Micoletzkya_japonica,Diplogastridae,Diplogastromorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Micoletzkya_masseyi,Diplogastridae,Diplogastromorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Parapristionchus_giblindavisi,Diplogastridae,Diplogastromorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Diplogasteroides_magnus,Diplogastridae,Diplogastromorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Koerneria_luziae,Diplogastridae,Diplogastromorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Pristionchus_exspectatus,Diplogastridae,Diplogastromorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Pristionchus_mayeri,Diplogastridae,Diplogastromorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Pristionchus_pacificus,Diplogastridae,Diplogastromorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Caenorhabditis_briggsae,Rhabditidae,Rhabditomorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Caenorhabditis_elegans,Rhabditidae,Rhabditomorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Caenorhabditis_remanei,Rhabditidae,Rhabditomorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Diploscapter_coronatus,Rhabditidae,Rhabditomorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Diploscapter_pachys,Rhabditidae,Rhabditomorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Oscheius_sp,Rhabditidae,Rhabditomorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Oscheius_tipulae,Rhabditidae,Rhabditomorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Poikilolaimus_oxycercus,Rhabditidae,Rhabditomorpha,Rhabditina (Clade V),Rhabditida,Chromadoria
+Ancylostoma_caninum,Ancylostomatidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Ancylostoma_ceylanicum,Ancylostomatidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Ancylostoma_duodenale,Ancylostomatidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Necator_americanus,Ancylostomatidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Angiostrongylus_cantonensis,Angiostrongylidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Angiostrongylus_costaricensis,Angiostrongylidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Oesophagostomum_dentatum,Chabertiidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Cooperia_punctata,Cooperiidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Dictyocaulus_viviparus,Dictyocaulidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Haemonchus_contortus,Haemonchidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Haemonchus_placei,Haemonchidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Teladorsagia_circumcincta,Haemonchidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Nippostrongylus_brasiliensis,Heligmonellidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Heligmosomoides_polygyrus,Heligmosomatidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Parelaphostrongylus_tenuis,Protostrongylidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Cylicostephanus_goldi,Strongylidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Strongylus_vulgaris,Strongylidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Trichostrongylus_colubriformis,Trichostrongylidae,Strongyloidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Heterorhabditis_bacteriophora,Heterorhabditidae,Heterorhabditoidea,Rhabditina (Clade V),Rhabditida,Chromadoria
+Anisakis_simplex,Anisakidae,Ascaridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Ascaris_lumbricoides,Ascarididae,Ascaridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Ascaris_sp,Ascarididae,Ascaridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Ascaris_suum,Ascarididae,Ascaridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Baylisascaris_schroederi,Ascarididae,Ascaridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Parascaris_equorum,Ascarididae,Ascaridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Parascaris_univalens,Ascarididae,Ascaridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Toxascaris_leonina,Ascarididae,Ascaridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Ascaridia_galli,Ascaridiidae,Ascaridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Toxocara_canis,Toxocaridae,Ascaridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Dracunculus_medinensis,Dracunculidae,Dracunculoidea,Spirurina (Clade III),Rhabditida,Chromadoria
+Gnathostoma_spinigerum,Gnathostomatidae,Gnathostomatomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Enterobius_vermicularis,Oxyuridae,Oxyuridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Syphacia_muris,Oxyuridae,Oxyuridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Thelastoma_sp,Thelastomatidae,Oxyuridomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Brumptaemilius_sp,Carnoyidae,Rhigonematomorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Gongylonema_pulchrum,Gongylonematidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Acanthocheilonema_spirocauda,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Acanthocheilonema_viteae,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Brugia_malayi,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Brugia_pahangi,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Brugia_timori,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Dipetalonema_caudispina,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Dirofilaria_immitis,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Elaeophora_elaphi,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Litomosoides_brasiliensis,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Litomosoides_sigmodontis,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Loa_loa,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Madathamugadia_hiepei,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Onchocerca_flexuosa,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Onchocerca_ochengi,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Onchocerca_volvulus,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Wuchereria_bancrofti,Onchocercidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Setaria_digitata,Setariidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Setaria_equina,Setariidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Crassicauda_magna,Tetrameridae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Thelazia_callipaeda,Thelaziidae,Spiruromorpha,Spirurina (Clade III),Rhabditida,Chromadoria
+Acrobeloides_nanus,Cephalobidae,Cephalobomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Rhabditophanes_sp,Alloionematidae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Halicephalobus_mephisto,Panagrolaimidae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Halicephalobus_sp,Panagrolaimidae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Panagrellus_redivivus,Panagrolaimidae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Panagrolaimus_davidi,Panagrolaimidae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Panagrolaimus_sp,Panagrolaimidae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Panagrolaimus_superbus,Panagrolaimidae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Propanagrolaimus_sp,Panagrolaimidae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Turbatrix_aceti,Panagrolaimidae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Steinernema_carpocapsae,Steinernematidae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Steinernema_feltiae,Steinernematidae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Steinernema_scapterisci,Steinernematidae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Parastrongyloides_trichosuri,Strongyloididae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Strongyloides_papillosus,Strongyloididae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Strongyloides_ratti,Strongyloididae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Strongyloides_stercoralis,Strongyloididae,Panagrolaimomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Ditylenchus_destructor,Anguinidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Ditylenchus_dipsaci,Anguinidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Subanguina_moxae,Anguinidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Aphelenchoides_besseyi,Aphelenchoididae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Aphelenchoides_fragariae,Aphelenchoididae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Bursaphelenchus_mucronatus,Parasitaphelenchidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Bursaphelenchus_okinawaensis,Parasitaphelenchidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Bursaphelenchus_xylophilus,Parasitaphelenchidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Globodera_ellingtonae,Heteroderidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Globodera_pallida,Heteroderidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Globodera_rostochiensis,Heteroderidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Heterodera_glycines,Heteroderidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Heterodera_schachtii,Heteroderidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Hoplolaimus_columbus,Hoplolaimidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Rotylenchulus_reniformis,Hoplolaimidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Meloidogyne_enterolobii,Meloidogynidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Meloidogyne_graminicola,Meloidogynidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Meloidogyne_hapla,Meloidogynidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Radopholus_similis,Pratylenchidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Deladenus_siricidicola,Sphaerulariidae,Tylenchomorpha,Tylenchina (Clade IV),Rhabditida,Chromadoria
+Soboliphyme_baturini,Soboliphymatidae,Dioctophymatida,Dorylaimia (Clade I),Dioctophymatida,Dorylaimia
+Longidorus_elongatus,Longidoridae,Dorylaimina,Dorylaimia (Clade I),Dorylaimida,Dorylaimia
+Xiphinema_index,Longidoridae,Dorylaimina,Dorylaimia (Clade I),Dorylaimida,Dorylaimia
+Allodorylaimus_sp,Qudsianematidae,Dorylaimina,Dorylaimia (Clade I),Dorylaimida,Dorylaimia
+Romanomermis_culicivorax,Mermithidae,Mermithida,Dorylaimia (Clade I),Mermithida,Dorylaimia
+Prionchulus_punctatus,Mononchidae,Mononchina,Dorylaimia (Clade I),Mononchida,Dorylaimia
+Trichinella_nativa,Trichinellidae,Trichinellida,Dorylaimia (Clade I),Trichinellida,Dorylaimia
+Trichinella_pseudospiralis,Trichinellidae,Trichinellida,Dorylaimia (Clade I),Trichinellida,Dorylaimia
+Trichinella_spiralis,Trichinellidae,Trichinellida,Dorylaimia (Clade I),Trichinellida,Dorylaimia
+Trichuris_muris,Trichuridae,Trichinellida,Dorylaimia (Clade I),Trichinellida,Dorylaimia
+Trichuris_suis,Trichuridae,Trichinellida,Dorylaimia (Clade I),Trichinellida,Dorylaimia
+Trichuris_trichiura,Trichuridae,Trichinellida,Dorylaimia (Clade I),Trichinellida,Dorylaimia
+Enoplus_spp,Enoplidae,Enoplina,Enoplia (Clade II),Enoplida,Enoplia
+Symplocostoma_sp,Enoplidae,Enoplina,Enoplia (Clade II),Enoplida,Enoplia
+Cylicolaimus_spp,Leptosomatidae,Enoplina,Enoplia (Clade II),Enoplida,Enoplia
+Thoracostomopsidae_sp,Thoracostomopsidae,Enoplina,Enoplia (Clade II),Enoplida,Enoplia
+Thoonchus_sp,Enchelidiidae,Oncholaimina,Enoplia (Clade II),Enoplida,Enoplia
+Oncholaimidae_sp,Oncholaimidae,Oncholaimina,Enoplia (Clade II),Enoplida,Enoplia
+Pontonema_vulgare,Oncholaimidae,Oncholaimina,Enoplia (Clade II),Enoplida,Enoplia
+Bathylaimus_sp,Tripyloididae,Tripyloidina,Enoplia (Clade II),Enoplida,Enoplia
+Tobrilus_sp,Tobrilidae,Tobrilina,Enoplia (Clade II),Triplonchida,Enoplia
