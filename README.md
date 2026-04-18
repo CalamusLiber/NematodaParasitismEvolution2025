@@ -330,7 +330,7 @@ This is the most computationally intensive stage. We ran MCMCtree using the appr
 |---|---|
 | `CalibrationPriorDistribution_6.r` | Translates fossil age constraints into user-specified statistical prior distributions (truncated Cauchy, skew-t, uniform); computes 95% HDI intervals; exports SVG plots and CSV tables for four calibration strategies |
 | `TimeTreeAnalysesSelectionIntegration.r` | Integrates all MCMCtree results; parses convergence and model metadata from file names; uses a decision tree (RPART) to classify which analytical choices predict convergence |
-| `TimeTreeGroupingEstimation.r` | Clusters converged time trees using PCA-DBSCAN, tSNE-DBSCAN, and autoencoder-DBSCAN to identify groups of similar time estimates and a consensus best estimate |
+| `TimeTreeGroupingEstimation.r` | Clusters converged time trees using PCA-DBSCAN, tSNE-DBSCAN, PRD-SBSCAN (based on custom-defiend distance), and autoencoder-DBSCAN to identify groups of similar time estimates and a consensus best estimate |
 | `SensAna.r` | Visualizes sensitivity of key clade age estimates across all calibration strategies; produces streamer plots and annotated individual tree figures |
 | `PlotSaveGroupTrees.r` | Builds averaged and centroid summary trees per cluster; computes 95% HPD intervals across trees; renders publication SVG figures with geological time scale overlays |
 | `VariableAssessmentRDA.r` | Redundancy analysis (RDA) and variance partitioning to quantify how much of the variation in time estimates is explained by calibration strategy, clock model, substitution model, and partition scheme |
