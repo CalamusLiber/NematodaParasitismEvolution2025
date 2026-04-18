@@ -630,7 +630,7 @@ source("7.AncestralStateReconstruction/ACE.r")
 
 - **Absolute paths** — Before running anything, do a global search-and-replace of `/To/Your/Directory/` with your own base directory. A quick `grep -r 'To/Your/Directory'` from the repo root will confirm all instances.
 - **SBATCH / PBS parameters** — job resource requests (nodes, CPUs, memory, partition names) are tuned for our specific cluster. Adjust them to fit your own scheduler and queue policies.
-- **NCBI email** — the Python scripts that query NCBI require a registered email address. Replace `A.N.Other@example.com` with your own wherever it appears.
+- **NCBI email** — the Python scripts that query NCBI require a registered email address. Replace `A.N.Other@example.com` or `lianges.luex@gmail.com (my address)` with your own wherever it appears.
 - **`Classification.csv`** — this file (in `6.MolecularClock/`) maps taxon names to their phylogenetic and taxonomic groups. It is required by several scripts in Stages 6 and 7. If you are using a different taxon set, you will need to update this file accordingly.
 - **`mcmctree.ctl`** — the PAML control file needs to be manually edited to point to your alignment, your tree file, and your calibration nodes before launching any MCMCtree jobs. The current file reflects our specific analysis and will not work out-of-the-box for a different dataset.
 - **R package `hisse`** — install from GitHub for the most recent version: `devtools::install_github("thej022214/hisse")`.
