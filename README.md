@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Nematoda Phylogenomics & Evolutionary Analysis Pipeline (Draft-20260418)
+=======
+# Nematoda Phylogenomics & Evolutionary Analysis Pipeline (draft)
+>>>>>>> cd11c70179d8108d893daf58ae9e3d14c3028113
 
 ## Overview
 
@@ -14,12 +18,15 @@ The workflow runs through seven sequential stages:
 7.AncestralStateReconstruction  ←  6.MolecularClock  ←  5.Phylogenetics  ←  4.MSA
 ```
 
+<<<<<<< HEAD
 When utilizing the methods, algorithms, or codes developed for this study, even if they are not related to nematodes, please be sure to cite our paper:
 
 ```
 Lü, L., K. De Baets, M. Giacomelli, M. E. Rossi, O. Holovachov, D. Pisani, P. C. J. Donoghue (2026) The timescale of nematode evolution reveals late and convergent radiations of parasitism. (in press).
 ```
 
+=======
+>>>>>>> cd11c70179d8108d893daf58ae9e3d14c3028113
 ---
 
 ## Table of Contents
@@ -47,6 +54,7 @@ Most steps in this pipeline genuinely need an HPC cluster — genome assembly, g
 
 ### Operating System
 
+<<<<<<< HEAD
 - **Linux** — all scripts were developed and tested on CentOS 7 and Ubuntu 20.04+ on HPC; this is the expected environment.
 - **Windows** — the R scripts (Stages 6–7) can be run interactively on a Windows desktop; Python scripts have not been tested on Windows and may need minor path adjustments.
 - **Mac** — none of the code has been tested on macOS; it may work for the R/Python components but is untested.
@@ -61,6 +69,20 @@ Most steps in this pipeline genuinely need an HPC cluster — genome assembly, g
 ## Guide for Environment Configuration
 
 Our pipeline is not a standalone application or an integrated software package. The scripts provided here serve as examples to demonstrate how we implemented the methods used and developed during our study. Therefore, we do not provide a one-click installer or a standard configure/make installation process.
+=======
+- **Linux** — all scripts were developed and tested on CentOS 7 and Ubuntu 20.04 on HPC; this is the expected environment
+- **Windows** — the R scripts (Stages 6–7) can be run interactively on a Windows desktop; Python scripts have not been tested on Windows and may need minor path adjustments
+- **Mac** — none of the code has been tested on macOS; it may work for the R/Python components but is untested
+
+### Core Software
+- **Conda / Anaconda** ≥ 23.x — we use Conda to manage all tool environments, which avoids most dependency conflicts
+- **Python** ≥ 3.9 (3.10 or 3.12 recommended)
+- **R** ≥ 4.2
+
+---
+
+## Installation Guide
+>>>>>>> cd11c70179d8108d893daf58ae9e3d14c3028113
 
 ### 1. Set Up the Project Directory
 
@@ -96,6 +118,7 @@ This creates the following environments:
 | `msaenv` | MAFFT / BMGE alignment & trimming |
 | `newpy` | Python 3.12 general purpose |
 
+<<<<<<< HEAD
 ### 3. Install Core R Packages
 
 Most R packages can be installed directly from CRAN in a single call. Open R (or RStudio) and run:
@@ -160,6 +183,9 @@ install_tfprobability()
 ---
 
 ### 4. Build BLAST / DIAMOND Databases
+=======
+### 3. Build BLAST / DIAMOND Databases
+>>>>>>> cd11c70179d8108d893daf58ae9e3d14c3028113
 
 Before you can run decontamination or annotation, you need local copies of the NCBI `nr` protein database and `UniVec.fasta`. Once downloaded, build the indexed databases:
 
@@ -242,7 +268,10 @@ Here we mask repetitive elements, assess genome completeness with BUSCO, and run
 | Script | Scheduler | Function |
 |---|---|---|
 | `NMRepeatMasker.sh` | — | Repeat annotation with RepeatMasker and RepeatModeler |
+<<<<<<< HEAD
 | `GffHardMasker.sh` | — | Shell-based hard masking of genome FASTA sequences using RepeatMasker GFF coordinates (replaces masked intervals with `N`). It runs at a slow crawl |
+=======
+>>>>>>> cd11c70179d8108d893daf58ae9e3d14c3028113
 | `NMBusco.sh` | — | BUSCO genome completeness assessment |
 | `NMmetaeuk.sh` / `NMmetaeuk.1.sh` | — | Gene prediction using MetaEuk against the UniRef90 protein database |
 | `NMPredMaker.6.a.sh` | SBATCH | Dispatcher: submits one MAKER job per genome, allocating resources adaptively based on genome size (>200 MB → 32 cores / 350 GB RAM; smaller genomes → 24 cores / 100 GB RAM) |
@@ -259,7 +288,11 @@ Here we mask repetitive elements, assess genome completeness with BUSCO, and run
 
 ---
 
+<<<<<<< HEAD
 ### Stage 4 — Multiple Sequence Alignments (`4.MSA/`)
+=======
+### Stage 4 — Multiple Sequence Alignment (`4.MSA/`)
+>>>>>>> cd11c70179d8108d893daf58ae9e3d14c3028113
 
 Every BUSCO locus gets aligned independently with MAFFT, trimmed with BMGE (we run two trimming strategies in parallel to assess sensitivity), and then evaluated with PhyKit. The two Python loci-selection scripts implement different filtering philosophies — use `LociSelection_aliba.py` for a quick, metric-based filter, or `LociSelection_treba.py` for a more thorough approach that also uses gene-tree evidence to catch spurious homologs.
 
@@ -311,10 +344,17 @@ This is the most computationally intensive stage. We ran MCMCtree using the appr
 | Script | Scheduler | Function |
 |---|---|---|
 | `NMMCMCTr.8.sh` | — | Dispatcher: loops over all topology × calibration × clock × partition × rate combinations and submits MCMCtree jobs |
+<<<<<<< HEAD
 | `NMMCMCTr.8.x.1.sh` / `NMMCMCTr.8.x.2.sh` | SBATCH | Workers: run the MCMCtree two-step approximation (Hessian/gradient computation, then MCMC posterior and prior sampling) |
 | `NMMCMCTreeChecking.sh` | — | Checks chain convergence for all MCMCtree runs |
 | `NMMCMCTreeSummary.8.sh` | — | Summarizes posterior time trees from completed MCMCtree runs |
 | `NMMCMCTreeUncompressed.sh` | — | Locates the uncompressed MCMCtree output archives and re-compress them using a Zip compressor |
+=======
+| `NMMCMCTr.8.x.1.sh` / `NMMCMCTr.8.x.2.sh` | SBATCH | Workers: run the MCMCtree two-step approximation (Hessian/gradient computation, then MCMC sampling) |
+| `NMMCMCTreeChecking.sh` | — | Checks chain convergence for all MCMCtree runs |
+| `NMMCMCTreeSummary.6.sh` / `NMMCMCTreeSummary.8.sh` | — | Summarizes posterior time trees from completed MCMCtree runs |
+| `NMMCMCTreeUncompressed.sh` | — | Decompresses MCMCtree output archives |
+>>>>>>> cd11c70179d8108d893daf58ae9e3d14c3028113
 | `runPy.sh` | — | SBATCH wrapper for `SumMCMCtree.py` |
 
 #### Python scripts
@@ -328,8 +368,13 @@ This is the most computationally intensive stage. We ran MCMCtree using the appr
 
 | Script | Function |
 |---|---|
+<<<<<<< HEAD
 | `CalibrationPriorDistribution_6.r` | Translates fossil age constraints into user-specified statistical prior distributions (truncated Cauchy, skew-t, uniform); computes 95% HDI intervals; exports SVG plots and CSV tables for four calibration strategies |
 | `TimeTreeAnalysesSelectionIntegration.r` | Integrates all MCMCtree results; parses convergence and model metadata from file names; uses a decision tree (RPART) to classify which analytical choices predict convergence |
+=======
+| `calibration_prior_distribution_6.r` | Translates fossil age constraints into statistical prior distributions (truncated Cauchy, skew-t, uniform); computes 95% HDI intervals; exports SVG plots and CSV tables for four calibration strategies |
+| `TimeTreeAnalysesSelectionIntegration.R` | Integrates all MCMCtree results; parses convergence and model metadata from file names; uses a decision tree (RPART) to classify which analytical choices predict convergence |
+>>>>>>> cd11c70179d8108d893daf58ae9e3d14c3028113
 | `TimeTreeGroupingEstimation.r` | Clusters converged time trees using PCA-DBSCAN, tSNE-DBSCAN, and autoencoder-DBSCAN to identify groups of similar time estimates and a consensus best estimate |
 | `SensAna.r` | Visualizes sensitivity of key clade age estimates across all calibration strategies; produces streamer plots and annotated individual tree figures |
 | `PlotSaveGroupTrees.r` | Builds averaged and centroid summary trees per cluster; computes 95% HPD intervals across trees; renders publication SVG figures with geological time scale overlays |
@@ -628,7 +673,11 @@ source("7.AncestralStateReconstruction/ACE.r")
 
 ## Notes and Common Gotchas
 
+<<<<<<< HEAD
 - **Absolute paths** — Before running anything, do a global search-and-replace of `/To/Your/Directory/` with your own base directory. A quick `grep -r 'To/Your/Directory'` from the repo root will confirm all instances.
+=======
+- **Absolute paths** — many scripts hard-code paths like `/user/home/vn21703/` or `/mnt/pcieraid0/`. You will need to do a find-and-replace for these before running anything. A quick `grep -r 'vn21703'` from the repo root will find them all.
+>>>>>>> cd11c70179d8108d893daf58ae9e3d14c3028113
 - **SBATCH / PBS parameters** — job resource requests (nodes, CPUs, memory, partition names) are tuned for our specific cluster. Adjust them to fit your own scheduler and queue policies.
 - **NCBI email** — the Python scripts that query NCBI require a registered email address. Replace `A.N.Other@example.com` with your own wherever it appears.
 - **`Classification.csv`** — this file (in `6.MolecularClock/`) maps taxon names to their phylogenetic and taxonomic groups. It is required by several scripts in Stages 6 and 7. If you are using a different taxon set, you will need to update this file accordingly.
