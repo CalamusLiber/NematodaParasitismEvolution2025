@@ -173,7 +173,7 @@ This builds BLAST+ (`nr`, `UniVec`) and DIAMOND (`nr`, `uniref100`) databases. T
 
 ## Pipeline Overview & Script Descriptions
 
-Below is a stage-by-stage breakdown of every script in the repository, what it does, and what it depends on. Shell scripts marked with a scheduler (SBATCH / PBS) need to be submitted to a cluster; the rest can be run directly.
+Below is a stage-by-stage breakdown of every script in the repository, what it does, and what it depends on. Shell scripts marked with a scheduler (SLURM / PBS) need to be submitted to a cluster; the rest can be run directly.
 
 ---
 
@@ -214,7 +214,7 @@ This stage covers both genome (WGS) and transcriptome (RNA-seq) assembly, plus t
 | `Nematoda_AfterQC.4.3.sh` | — | Batch RNA-seq quality control using AfterQC |
 | `Nematoda_spades.0.pbs` | PBS | WGS genome assembly pipeline: deduplication → quality trimming → depth normalization (BBtools) → SPAdes assembly |
 | `NMSOAP_trans.sh` / `NMSOAP_trans.x.sh` | — | Transcriptome assembly using SOAPdenovo-Trans |
-| `NMTrinity.9.sh` / `NMTrinity.9.x.sh` | SBATCH | Per-sample Trinity de novo transcriptome assembly, AfterQC trimming, and TransDecoder ORF prediction |
+| `NMTrinity.9.sh` / `NMTrinity.9.x.sh` | SLURM | Per-sample Trinity de novo transcriptome assembly, AfterQC trimming, and TransDecoder ORF prediction |
 | `NMTrinityQuality.sh` / `NMTransAssemblyQuality.sh` | — | Post-assembly quality statistics |
 | `Trinity.DeConX.longestORF.sh` | — | Extracts the longest ORF per transcript from decontaminated Trinity assemblies |
 | `UniVec.Decontamination.6.sh` | — | Screens for vector contamination using BLAST against the NCBI UniVec database |
@@ -245,8 +245,8 @@ Here we mask repetitive elements, assess genome completeness with BUSCO, and run
 | `GffHardMasker.sh` | — | Shell-based hard masking of genome FASTA sequences using RepeatMasker GFF coordinates (replaces masked intervals with `N`). It runs at a slow crawl |
 | `NMBusco.sh` | — | BUSCO genome completeness assessment |
 | `NMmetaeuk.sh` / `NMmetaeuk.1.sh` | — | Gene prediction using MetaEuk against the UniRef90 protein database |
-| `NMPredMaker.6.a.sh` | SBATCH | Dispatcher: submits one MAKER job per genome, allocating resources adaptively based on genome size (>200 MB → 32 cores / 350 GB RAM; smaller genomes → 24 cores / 100 GB RAM) |
-| `NMPredMaker.6.a.x.sh` | SBATCH | Worker: runs the full multi-round MAKER pipeline (BLAST evidence integration → Augustus → SNAP) for a single genome |
+| `NMPredMaker.6.a.sh` | SLURM | Dispatcher: submits one MAKER job per genome, allocating resources adaptively based on genome size (>200 MB → 32 cores / 350 GB RAM; smaller genomes → 24 cores / 100 GB RAM) |
+| `NMPredMaker.6.a.x.sh` | SLURM | Worker: runs the full multi-round MAKER pipeline (BLAST evidence integration → Augustus → SNAP) for a single genome |
 
 #### Python scripts
 
@@ -265,7 +265,7 @@ Every BUSCO locus gets aligned independently with MAFFT, trimmed with BMGE (we r
 
 | Script | Scheduler | Function |
 |---|---|---|
-| `NMAlignTrim.sh` | SBATCH (4 nodes × 4 tasks × 8 CPUs) | Parallel MAFFT alignment (E-INS-i) + BMGE trimming (two strategies) + PhyKit quality metrics for all BUSCO loci |
+| `NMAlignTrim.sh` | SLURM (4 nodes × 4 tasks × 8 CPUs) | Parallel MAFFT alignment (E-INS-i) + BMGE trimming (two strategies) + PhyKit quality metrics for all BUSCO loci |
 | `NMFilterConcat.sh` | — | Filters aligned loci and concatenates the selected set into a supermatrix |
 
 #### Python scripts
@@ -287,16 +287,16 @@ We inferred trees using two complementary methods: maximum likelihood with IQ-TR
 
 | Script | Scheduler | Function |
 |---|---|---|
-| `NMIQTREE.1.sh` | SBATCH (4 nodes × 32 CPUs) | Maximum likelihood tree inference with ModelFinder (LG/WAG), ultrafast bootstrap (×1000), aLRT, and aBayes; no partition model |
-| `NMIQTREE_mix5.sh` / `NMIQTREE_mix6.sh` | SBATCH | IQ-TREE runs using mixture models (C60+LG+PMSF) with partition schemes |
+| `NMIQTREE.1.sh` | SLURM (4 nodes × 32 CPUs) | Maximum likelihood tree inference with ModelFinder (LG/WAG), ultrafast bootstrap (×1000), aLRT, and aBayes; no partition model |
+| `NMIQTREE_mix5.sh` / `NMIQTREE_mix6.sh` | SLURM | IQ-TREE runs using mixture models (C60+LG+PMSF) with partition schemes |
 | `AllBackbone.bp.merged.constraint.tre` | — | Backbone constraint tree used for constrained phylogenetic inference |
 
 #### PhyloBayes (`pb_mpi/`)
 
 | Script | Scheduler | Function |
 |---|---|---|
-| `NMBBtree1.PB.sh` / `NMBBtree4.PB.sh` | SBATCH | PhyloBayes MPI inference (CAT-GTR) on backbone datasets of 58 or 43 taxa |
-| `NMPB1.x.sh` / `NMPB4.x.sh` | SBATCH | Worker scripts launching individual PhyloBayes MPI chains |
+| `NMBBtree1.PB.sh` / `NMBBtree4.PB.sh` | SLURM | PhyloBayes MPI inference (CAT-GTR) on backbone datasets of 58 or 43 taxa |
+| `NMPB1.x.sh` / `NMPB4.x.sh` | SLURM | Worker scripts launching individual PhyloBayes MPI chains |
 | `NMPBcomp.sh` | — | Convergence diagnostics: `bpcomp` and `tracecomp` run across all pairwise, triple, and quadruple chain combinations |
 | `NMPBModelComparison.sh` | — | Cross-run model comparison for PhyloBayes analyses |
 
@@ -311,7 +311,7 @@ This is the most computationally intensive stage. We ran MCMCtree using the appr
 | Script | Scheduler | Function |
 |---|---|---|
 | `NMMCMCTr.8.sh` | — | Dispatcher: loops over all topology × calibration × clock × partition × rate combinations and submits MCMCtree jobs |
-| `NMMCMCTr.8.x.1.sh` / `NMMCMCTr.8.x.2.sh` | SBATCH | Workers: run the MCMCtree two-step approximation (Hessian/gradient computation, then MCMC posterior and prior sampling) |
+| `NMMCMCTr.8.x.1.sh` / `NMMCMCTr.8.x.2.sh` | SLURM | Workers: run the MCMCtree two-step approximation (Hessian/gradient computation, then MCMC posterior and prior sampling) |
 | `NMMCMCTreeChecking.sh` | — | Checks chain convergence for all MCMCtree runs |
 | `NMMCMCTreeSummary.8.sh` | — | Summarizes posterior time trees from completed MCMCtree runs |
 | `NMMCMCTreeUncompressed.sh` | — | Locates the uncompressed MCMCtree output archives and re-compress them using a Zip compressor |
@@ -629,7 +629,7 @@ source("7.AncestralStateReconstruction/ACE.r")
 ## Notes and Common Gotchas
 
 - **Absolute paths** — Before running anything, do a global search-and-replace of `/To/Your/Directory/` with your own base directory. A quick `grep -r 'To/Your/Directory'` from the repo root will confirm all instances.
-- **SBATCH / PBS parameters** — job resource requests (nodes, CPUs, memory, partition names) are tuned for our specific cluster. Adjust them to fit your own scheduler and queue policies.
+- **SLURM / PBS parameters** — job resource requests (nodes, CPUs, memory, partition names) are tuned for our specific cluster. Adjust them to fit your own scheduler and queue policies.
 - **NCBI email** — the Python scripts that query NCBI require a registered email address. Replace `A.N.Other@example.com` or `lianges.luex@gmail.com (my address)` with your own wherever it appears.
 - **`Classification.csv`** — this file (in `6.MolecularClock/`) maps taxon names to their phylogenetic and taxonomic groups. It is required by several scripts in Stages 6 and 7. If you are using a different taxon set, you will need to update this file accordingly.
 - **`mcmctree.ctl`** — the PAML control file needs to be manually edited to point to your alignment, your tree file, and your calibration nodes before launching any MCMCtree jobs. The current file reflects our specific analysis and will not work out-of-the-box for a different dataset.
