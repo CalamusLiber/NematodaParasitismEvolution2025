@@ -1,4 +1,4 @@
-# Nematoda Phylogenomics & Evolutionary Analysis Pipeline (Draft-20260418)
+# Nematoda Phylogenomics & Evolutionary Analysis Pipeline (Draft-20260428)
 
 ## Overview
 
@@ -243,7 +243,7 @@ Here we mask repetitive elements, assess genome completeness with BUSCO, and run
 |---|---|---|
 | `NMRepeatMasker.sh` | — | Repeat annotation with RepeatMasker and RepeatModeler |
 | `GffHardMasker.sh` | — | Shell-based hard masking of genome FASTA sequences using RepeatMasker GFF coordinates (replaces masked intervals with `N`). It runs at a slow crawl |
-| `NMBusco.sh` | — | BUSCO genome completeness assessment |
+| `NMBusco.sh` | SLURM | BUSCO genome completeness assessment |
 | `NMmetaeuk.sh` / `NMmetaeuk.1.sh` | — | Gene prediction using MetaEuk against the UniRef90 protein database |
 | `NMPredMaker.6.a.sh` | SLURM | Dispatcher: submits one MAKER job per genome, allocating resources adaptively based on genome size (>200 MB → 32 cores / 350 GB RAM; smaller genomes → 24 cores / 100 GB RAM) |
 | `NMPredMaker.6.a.x.sh` | SLURM | Worker: runs the full multi-round MAKER pipeline (BLAST evidence integration → Augustus → SNAP) for a single genome |
