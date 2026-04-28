@@ -348,7 +348,7 @@ The final analytical stage asks: when and how many times did parasitism evolve i
 |---|---|
 | `HiSSEModels.r` | Core modelling function: fits the full HiSSE model suite (null, BiSSE-like, 2-state HiSSE, 4-state HiSSE, MiSSE); prunes redundant models; performs AIC/AICc selection; returns model-averaged rates and marginal ancestral state probabilities |
 | `ACE.r` | Applies `HiSSEModels` across four dated phylogenies (cLGPMSF, C60PMSF, LG, traditional calibration); reconstructs ancestral free-living vs parasitic states; produces annotated tree figures; calls `SSEStateRateTest` for each tree |
-| `SSEStateRateTest.r` | Bins phylogenetic nodes into geological time windows; categorizes nodes as FreeLiving / Parasitic / Hard / Soft; tests rate differences between states and before/after a temporal cut-point using ANCOVA; generates rate-through-time plots and rate distribution histograms |
+| `SSEStateRateTest.r` | Bins phylogenetic nodes into geological time windows; categorizes nodes as FreeLiving / Parasitic / Hard / Soft; tests rate differences between states and before/after a temporal cut-point using ANCOVA and post-hoc multiple comparisons (please read the **in-line comments** for details about comparison methods!); generates rate-through-time plots and rate distribution histograms |
 
 **Key R dependencies:** `hisse`, `ape`, `ggtree`, `treeio`, `geiger`, `ggplot2`, `patchwork`, `agricolae`, `car`, `plyr`, `dplyr`, `future`, `doParallel`, `readxl`, `geiger`, `phytools`
 
@@ -376,7 +376,7 @@ python 4.MSA/LociSelection_aliba.py \
 
 ### Demo 2: Calibration Prior Visualization
 
-This generates the fossil calibration prior distributions used in the molecular clock analysis. It is self-contained — just run the script from its own directory.
+This generates the fossil calibration prior distributions used in the molecular clock analysis. It is self-contained — just replace the ages according to your own time priors and run the script from its own directory.
 
 ```r
 # In R (set working directory to 6.MolecularClock/ first):
@@ -413,7 +413,7 @@ Both scripts output Excel files. Review and curate these manually to remove asse
 sbatch 1.SequenceAcquisition/GenomeDownload.sh assembly_info.csv
 ```
 
-The script runs up to 20 parallel downloads and writes its progress to `CLine.log`, so if it is interrupted you can resubmit and it will pick up where it left off.
+The script runs up to 20 parallel downloads and writes its progress to `CLine.log`, so if it is interrupted you can resubmit and it will pick up where it left off. The CSV file `Maker-EST.csv` in the same directory shows an example of the `assembly_info.csv` in the above command.
 
 #### Step 3 — Assemble transcriptomes (RNA-seq)
 
@@ -423,11 +423,15 @@ Submit one job per sample. The script handles quality control, Trinity assembly,
 sbatch 2.Assembly/NMTrinity.9.x.sh <sample_name>
 ```
 
+If your cluster supports submitting multiple jobs simultaneously, it is recommended to use `NMTrinity.9.sh` rather than executing `NMTrinity.9.x.sh` scripts sequentially.
+
 #### Step 4 — Assemble genomes (WGS)
 
 ```bash
 qsub 2.Assembly/Nematoda_spades.0.pbs
 ```
+
+To run these jobs in parallel, you can enable parallel processing by uncommenting the specified lines. However, doing this on a single node is not recommended. A better approach is to submit multiple *Slurm* jobs, running each on a separate node.
 
 #### Step 5 — Decontaminate assemblies
 
@@ -444,31 +448,30 @@ python 2.Assembly/DeContaminRNA-rk.py --fasta assembly.fasta --blast diamond_hit
 python 2.Assembly/SeqOriginPiePlot.py --fasta assembly.fasta --blast diamond_hits.csv
 ```
 
-#### Step 6 — Gene prediction
-
-Repeat masking should be done before MAKER, as MAKER uses the masked genome by default:
+The preferred method for executing these scripts is to run the following command:
 
 ```bash
-# Assess genome completeness
-bash 3.Prediction/NMBusco.sh
+sbatch 2.Assembly/UniVec.Decontamination.6.sh
+```
 
-# Mask repeats
-bash 3.Prediction/NMRepeatMasker.sh
+#### Step 6 — Gene prediction
 
-# Apply masking to FASTA using RepeatMasker GFF coordinates
-python 3.Prediction/GffRepeatMasker.py --fasta genome.fasta --gff repeats.gff --masktype soft
+Repeat masking should be performed prior to running MAKER, as MAKER utilizes the masked genome by default. In addition to MAKER, MetaEuk is also employed for gene prediction. The `NMPredMaker.6.a.x.sh` script integrates Repeat Masking, MAKER, and MetaEuk, and can be executed for each genomic assembly sequentially or as part of multiple jobs submitted simultaneously using `NMPredMaker.6.a.sh`:
 
+```bash
 # Run MAKER gene prediction (dispatches one SBATCH job per genome automatically)
-bash 3.Prediction/NMPredMaker.6.a.sh
+sbatch 3.Prediction/NMPredMaker.6.a.sh
 ```
 
 #### Step 7 — Consolidate BUSCO orthologs across all taxa
 
+Copy or move the predicted amino acid sequences (*.pep.faa) to the directory `$DIR_current/pep`, and then submit a Slurm job using the following command:
+
 ```bash
-python 3.Prediction/UniteBUSCOs.py --buscodir /data/busco/ --outdir /data/busco/united/
+sbatch 3.Prediction/NMBusco.sh
 ```
 
-This collects the per-species BUSCO protein sequences and writes one unified FASTA per locus, ready for alignment.
+This process gathers the BUSCO protein sequences for each species and generates a single unified FASTA file for each locus, preparing them for alignment. Typically, a single job on one node with approximately 32 vCPUs is sufficient, and it runs quite quickly. If you have a large volume of data, you can utilize as many nodes as permitted, but running in a single job is proper than distributing several jobs.
 
 #### Step 8 — Multiple sequence alignment and loci selection
 
@@ -476,14 +479,8 @@ This collects the per-species BUSCO protein sequences and writes one unified FAS
 # Align, trim, and score all BUSCO loci in parallel
 sbatch 4.MSA/NMAlignTrim.sh
 
-# Filter loci by quality (quick approach)
-python 4.MSA/LociSelection_aliba.py -i msa/matrix/stats.csv -o selected_loci.txt
-
-# Filter loci using gene-tree evidence too, then concatenate into supermatrix
-python 4.MSA/LociSelection_treba.py -i msa/matrix/stats.csv -o supermatrix.phy
-
-# Concatenate selected loci into a single matrix
-bash 4.MSA/NMFilterConcat.sh
+# Filter loci by quality (quick approach) and using gene-tree evidence too, then concatenate selected loci into a single supermatrix
+sbatch 4.MSA/NMFilterConcat.sh
 ```
 
 #### Step 9 — Phylogenetic inference
@@ -491,52 +488,63 @@ bash 4.MSA/NMFilterConcat.sh
 We recommend running both IQ-TREE and PhyloBayes and comparing the topologies before proceeding to dating:
 
 ```bash
-# Maximum likelihood tree
+# Maximum likelihood tree, it results a best fitting substitution model and an initial ML tree that can be used to identify fully supported clades for subsequent clade-wise subsampling
 sbatch 5.Phylogenetics/IQTREE/NMIQTREE.1.sh
+
+# Maximum likelihood trees with more complicated substitution models, LG4X and Poisson-C60 and LG-C60-PMSF
+sbatch 5.Phylogenetics/IQTREE/NMIQTREE_mix5.sh
 
 # Bayesian inference (runs multiple parallel chains)
 sbatch 5.Phylogenetics/pb_mpi/FBB_58taxa/NMBBtree1.PB.sh
 
-# Check whether chains have converged (run after sufficient sampling)
-bash 5.Phylogenetics/pb_mpi/NMPBcomp.sh 1 4 1000
+# Bayesian inference (runs multiple parallel chains)
+sbatch 5.Phylogenetics/pb_mpi/FBB_43taxa/NMBBtree4.PB.sh
+
+# Verify if the chains have converged (this should be done after adequate sampling). As indicated in the example command, check chains 1 to 4 while discarding the first 1000 generations as burn-in.
+sbatch 5.Phylogenetics/pb_mpi/NMPBcomp.sh 1 4 1000
+
+# Maximum likelihood tree using PMSF which was guided by a LG tree that was caonstrained by a combined Bayesian tree from the two Bayesian phylogenies above.
+sbatch 5.Phylogenetics/IQTREE/NMIQTREE_mix6.sh
 ```
 
 #### Step 10 — Molecular clock dating
 
-This step requires some manual preparation: edit `mcmctree.ctl` to specify your tree, alignment, and calibration nodes before running the dispatcher.
+This step requires some manual preparation: edit `mcmctree.ctl` to specify your tree, alignment, and calibration nodes before running the dispatcher. The input sequence file can be the 184-taxa output (full dataset with outgroups) of `4.MSA\NMFilterConcat.sh`.
 
 ```bash
 # Convert alignment to PAML relaxed-PHYLIP format
-python 6.MolecularClock/PAMLphylip.py --partitions partitions.nex --outdir timing/
+python 6.MolecularClock/PAMLphylip.py --seq FullData184taxa171097AA.phy --partitions partitions.nex --outdir timing/
 
-# Visualize and set fossil calibration priors (R)
+# Visualize and set fossil calibration priors (R), replace the ages with your time priors before use
 Rscript 6.MolecularClock/calibration_prior_distribution_6.r
 
-# Submit all MCMCtree runs (loops over all analytical combinations)
-bash 6.MolecularClock/NMMCMCTr.8.sh
+# Submit all MCMCtree runs with a fixed sample fraction(loops over all analytical combinations), if you want to test different sample fractions, copy the whole directory and modify the `mcmctree.ctl` file and run the following command again:
+sbatch 6.MolecularClock/NMMCMCTr.8.sh
 
-# Summarize posteriors once runs are complete
-sbatch 6.MolecularClock/runPy.sh
+# Summarize the posteriors and priors once the runs are complete. You don't need to wait for all jobs to finish, as the script is designed to identify which prior and posterior MCMC sampling chains have all completed first.
+sbatch 6.MolecularClock/NMMCMCTreeSummary.8.sh
 
 # Cluster the resulting time trees and identify robust estimates
+Rscript 6.MolecularClock/TimeTreeAnalysesSelectionIntegration.r
 Rscript 6.MolecularClock/TimeTreeGroupingEstimation.r
-
-# Sensitivity analysis across calibration strategies
-Rscript 6.MolecularClock/SensAna.r
 
 # Assess which analytical choices most influence the results
 Rscript 6.MolecularClock/VariableAssessmentRDA.r
 Rscript 6.MolecularClock/VariableAssessmentXGB.r
 ```
 
+Conduct sensitivity analysis across calibration strategies. Before this, you must first perform molecular clock analyses (`NMMCMCTr.8.sh`) using sensitivity data and under the specified sensitivity conditions.
+
+```bash
+Rscript 6.MolecularClock/SensAna.r
+```
+
 #### Step 11 — Ancestral state reconstruction
 
-Load the scripts in order — `HiSSEModels.r` and `SSEStateRateTest.r` define functions used by `ACE.r`:
+Ensure that all libraries and dependencies are installed and available before executing the script `ACE.r`. This script will load `HiSSEModels.r` and `SSEStateRateTest.r` prior to processing.
 
-```r
-source("7.AncestralStateReconstruction/HiSSEModels.r")
-source("7.AncestralStateReconstruction/SSEStateRateTest.r")
-source("7.AncestralStateReconstruction/ACE.r")
+```bash
+Rscript 7.AncestralStateReconstruction/ACE.r
 ```
 
 ---
@@ -549,8 +557,8 @@ source("7.AncestralStateReconstruction/ACE.r")
 | 2. Assembly | `*_trinity.Trinity.fasta`, `*_scaffolds.fasta`, `*.tdc.pep.faa` |
 | 3. Prediction | `*.final.maker.pep.faa`, `*.mtek.ur90.pep.faa`, BUSCO summary reports |
 | 4. MSA | `*.mafft.fasta`, `*.bmge.fasta`, `alignment_stats.csv`, `selected_loci.txt`, `supermatrix.phy` |
-| 5. Phylogenetics | `*.contree` (ML tree), `*.pb` chain files, `bpcomp*.log` (convergence) |
-| 6. Molecular Clock | `*_posterior_tree_good.tre`, `KeyCladeTime_SATrees.csv`, calibration prior SVG plots, `AllPosteriorTimeTree.*.RData` |
+| 5. Phylogenetics | `*.contree` (ML tree), `*.treefile` (ML tree),`*.pb` chain files, `bpcomp*.log` (convergence) |
+| 6. Molecular Clock | `*_posterior_tree_good.tre`, `*_posterior_tree_acpt.tre`, `*_posterior_tree_bad.tre`, `KeyCladeTime_SATrees.csv`, calibration prior SVG plots, `AllPosteriorTimeTree.*.RData` |
 | 7. Ancestral State | `HiSSE_ModelSelection-*.csv`, `HiSSE_RateData*-*.csv`, `ANCOVA report*.txt`, `Rate Change Through Time-*.svg`, `Rate Distributions Histogram-*.svg` |
 
 ---

@@ -270,7 +270,7 @@ SSEStateRateTest <- function(SSE, bin.wd=10, cut.point=NULL, tag=NULL, drop.outg
             Yadj <- RateModAvg04$coefficients['extinction0'] * xdata$extinction0
             RateModAvg04 <- lm(extinction - Yadj ~ BAcut, data = xdata)
         
-            xdata <- RateDataModAvg[KeepNodeIDs,]
+        xdata <- RateDataModAvg[KeepNodeIDs,]
         RateState2ModAvg01 <- lm(net.div ~ state2 + BAcut + net.div0, data = xdata)
             Yadj <- RateState2ModAvg01$coefficients['net.div0'] * xdata$net.div0
             RateState2ModAvg01 <- lm(net.div - Yadj ~ state2 + BAcut, data = xdata)
@@ -305,9 +305,17 @@ SSEStateRateTest <- function(SSE, bin.wd=10, cut.point=NULL, tag=NULL, drop.outg
             cat(paste('=====ANCOVA for Rate Difference between Before and After ', as.character(cut.point), ' Ma on Nodes=====\n', sep = ''))
             cat('## Net Diversification ##\n')
             print(car::Anova(RateModAvg01, type=3))
+            # As long as the main effect of BAcut is significant, the LSD test is equivalent and not necessary for two-group comparison, but we still perform it for consistency with the following multiple comparisons
             cat('\n# LSD Multiple Comparison\n')
             RateNodeLSD <- LSD.test(RateModAvg01, 'BAcut', group=TRUE, p.adj = 'none')
             print(RateNodeLSD)
+            ## The Holm method is more conservative than the unadjusted method, and the HSD method is more conservative than the LSD method with or without p-value adjustment, but all three methods are equivalent for two-group comparison, so we perform them all for consistency with the following multiple comparisons
+            # cat('\n# LSD Multiple Comparison\n')
+            # RateNodeLSD <- LSD.test(RateModAvg01, 'BAcut', group=TRUE, p.adj = 'holm')
+			# print(RateNodeLSD)
+            # cat('\n# HSD Multiple Comparison\n')
+            # RateNodeHSD <- HSD.test(RateModAvg01, 'BAcut', group=TRUE, unbalanced = TRUE)
+            # print(RateNodeHSD)
             Effects <- rownames(RateNodeLSD$means)
             RateNodeTable1 <- cbind(PhyModel=strsplit(tag,'_')[[1]][2], AmbiLifeStyle=strsplit(tag,'_')[[1]][1],Model='Averaged',Effects,RateNodeLSD$means[Effects,1:2],groups=RateNodeLSD$groups[Effects,'groups'])
             cat('=========================\n\n')
@@ -339,6 +347,13 @@ SSEStateRateTest <- function(SSE, bin.wd=10, cut.point=NULL, tag=NULL, drop.outg
             cat('\n# LSD Multiple Comparison\n')
             RateNodeLSD <- LSD.test(RateState2ModAvg01, c('state2','BAcut'), group=TRUE, p.adj = 'none')
             print(RateNodeLSD)
+            ## The Holm method is more conservative than the unadjusted method, and the HSD method is more conservative than the LSD method. Here we performed the LSD test without p-value adjustment for multiple comparisons, as it is more powerful and less conservative than the other two methods. What we really expected is not simply a significant difference between any comparison, but a significant difference between post-90Ma parasitic nodes and all the other three groups (pre-90Ma parasitic nodes, pre-90Ma free-living nodes, and post-90Ma free-living nodes), where these three groups are not significantly different. We are willing to test whether our expectation remains robust under a slightly higher false positive rate for the sake of higher power to detect this specific pattern. However, we also provide reference codes that perform the LSD test with Holm p-value adjustment and the HSD test. We encourage the readers to try these two more conservative methods and copy the codes for the multiple comparisons in the following sections by themselves. In our case, the LSD test with Holm p-value adjustment and the HSD test also showed little changes in significance, so the choice of multiple comparison method does not affect our conclusions in this case.
+            # cat('\n# LSD Multiple Comparison\n')
+            # RateNodeLSD <- LSD.test(RateState2ModAvg01, c('state2','BAcut'), group=TRUE, p.adj = 'holm')
+            # print(RateNodeLSD)
+            # cat('\n# HSD Multiple Comparison\n')
+            # RateNodeHSD <- HSD.test(RateState2ModAvg01, c('state2','BAcut'), group=TRUE, unbalanced = TRUE)
+            # print(RateNodeHSD)
             Effects <- rownames(RateNodeLSD$means)
             RateNodeTable2 <- cbind(PhyModel=strsplit(tag,'_')[[1]][2], AmbiLifeStyle=strsplit(tag,'_')[[1]][1],Model='Averaged',Effects,RateNodeLSD$means[Effects,1:2],groups=RateNodeLSD$groups[Effects,'groups'])
             cat('=========================\n\n')
