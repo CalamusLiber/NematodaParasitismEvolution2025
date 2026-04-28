@@ -211,14 +211,14 @@ This stage covers both genome (WGS) and transcriptome (RNA-seq) assembly, plus t
 
 | Script | Scheduler | Function |
 |---|---|---|
-| `Nematoda_AfterQC.4.3.sh` | — | Batch RNA-seq quality control using AfterQC |
+| `Nematoda_AfterQC.4.3.sh` | bash | Batch RNA-seq quality control using AfterQC |
 | `Nematoda_spades.0.pbs` | PBS | WGS genome assembly pipeline: deduplication → quality trimming → depth normalization (BBtools) → SPAdes assembly |
-| `NMSOAP_trans.sh` / `NMSOAP_trans.x.sh` | — | Transcriptome assembly using SOAPdenovo-Trans |
+| `NMSOAP_trans.sh` / `NMSOAP_trans.x.sh` | bash/SLURM | Transcriptome assembly using SOAPdenovo-Trans |
 | `NMTrinity.9.sh` / `NMTrinity.9.x.sh` | SLURM | Per-sample Trinity de novo transcriptome assembly, AfterQC trimming, and TransDecoder ORF prediction |
 | `NMTrinityQuality.sh` / `NMTransAssemblyQuality.sh` | — | Post-assembly quality statistics |
-| `Trinity.DeConX.longestORF.sh` | — | Extracts the longest ORF per transcript from decontaminated Trinity assemblies |
-| `UniVec.Decontamination.6.sh` | — | Screens for vector contamination using BLAST against the NCBI UniVec database |
-| `soap2trinity.sh` | — | Converts SOAPdenovo-Trans output FASTA headers to Trinity-compatible naming format |
+| `Trinity.DeConX.longestORF.sh` | bash | Extracts the longest ORF per transcript from decontaminated Trinity assemblies |
+| `UniVec.Decontamination.6.sh` | SLURM | Screens for vector contamination using BLAST against the NCBI UniVec database |
+| `soap2trinity.sh` | bash | Converts SOAPdenovo-Trans output FASTA headers to Trinity-compatible naming format |
 | `NMDrawSeqOri.slm` | SLURM | Submits sequence-origin analysis jobs |
 
 #### Python scripts
@@ -241,10 +241,10 @@ Here we mask repetitive elements, assess genome completeness with BUSCO, and run
 
 | Script | Scheduler | Function |
 |---|---|---|
-| `NMRepeatMasker.sh` | — | Repeat annotation with RepeatMasker and RepeatModeler |
-| `GffHardMasker.sh` | — | Shell-based hard masking of genome FASTA sequences using RepeatMasker GFF coordinates (replaces masked intervals with `N`). It runs at a slow crawl |
+| `NMRepeatMasker.sh` | SLURM | Repeat annotation with RepeatMasker and RepeatModeler |
+| `GffHardMasker.sh` | bash/SLURM | Shell-based hard masking of genome FASTA sequences using RepeatMasker GFF coordinates (replaces masked intervals with `N`). It runs at a slow crawl |
 | `NMBusco.sh` | SLURM | BUSCO genome completeness assessment |
-| `NMmetaeuk.sh` / `NMmetaeuk.1.sh` | — | Gene prediction using MetaEuk against the UniRef90 protein database |
+| `NMmetaeuk.sh` / `NMmetaeuk.1.sh` | SLURM | Gene prediction using MetaEuk against the UniRef90 protein database |
 | `NMPredMaker.6.a.sh` | SLURM | Dispatcher: submits one MAKER job per genome, allocating resources adaptively based on genome size (>200 MB → 32 cores / 350 GB RAM; smaller genomes → 24 cores / 100 GB RAM) |
 | `NMPredMaker.6.a.x.sh` | SLURM | Worker: runs the full multi-round MAKER pipeline (BLAST evidence integration → Augustus → SNAP) for a single genome |
 
@@ -266,7 +266,7 @@ Every BUSCO locus gets aligned independently with MAFFT, trimmed with BMGE (we r
 | Script | Scheduler | Function |
 |---|---|---|
 | `NMAlignTrim.sh` | SLURM (4 nodes × 4 tasks × 8 CPUs) | Parallel MAFFT alignment (E-INS-i) + BMGE trimming (two strategies) + PhyKit quality metrics for all BUSCO loci |
-| `NMFilterConcat.sh` | — | Filters aligned loci and concatenates the selected set into a supermatrix |
+| `NMFilterConcat.sh` | SLURM | Filters aligned loci and concatenates the selected set into a supermatrix |
 
 #### Python scripts
 
@@ -297,8 +297,8 @@ We inferred trees using two complementary methods: maximum likelihood with IQ-TR
 |---|---|---|
 | `NMBBtree1.PB.sh` / `NMBBtree4.PB.sh` | SLURM | PhyloBayes MPI inference (CAT-GTR) on backbone datasets of 58 or 43 taxa |
 | `NMPB1.x.sh` / `NMPB4.x.sh` | SLURM | Worker scripts launching individual PhyloBayes MPI chains |
-| `NMPBcomp.sh` | — | Convergence diagnostics: `bpcomp` and `tracecomp` run across all pairwise, triple, and quadruple chain combinations |
-| `NMPBModelComparison.sh` | — | Cross-run model comparison for PhyloBayes analyses |
+| `NMPBcomp.sh` | bash | Convergence diagnostics: `bpcomp` and `tracecomp` run across all pairwise, triple, and quadruple chain combinations |
+| `NMPBModelComparison.sh` | SLURM | Cross-run model comparison for PhyloBayes analyses |
 
 ---
 
@@ -310,12 +310,12 @@ This is the most computationally intensive stage. We ran MCMCtree using the appr
 
 | Script | Scheduler | Function |
 |---|---|---|
-| `NMMCMCTr.8.sh` | — | Dispatcher: loops over all topology × calibration × clock × partition × rate combinations and submits MCMCtree jobs |
+| `NMMCMCTr.8.sh` | bash | Dispatcher: loops over all topology × calibration × clock × partition × rate combinations and submits MCMCtree jobs |
 | `NMMCMCTr.8.x.1.sh` / `NMMCMCTr.8.x.2.sh` | SLURM | Workers: run the MCMCtree two-step approximation (Hessian/gradient computation, then MCMC posterior and prior sampling) |
-| `NMMCMCTreeChecking.sh` | — | Checks chain convergence for all MCMCtree runs |
-| `NMMCMCTreeSummary.8.sh` | — | Summarizes posterior time trees from completed MCMCtree runs |
-| `NMMCMCTreeUncompressed.sh` | — | Locates the uncompressed MCMCtree output archives and re-compress them using a Zip compressor |
-| `runPy.sh` | — | SBATCH wrapper for `SumMCMCtree.py` |
+| `NMMCMCTreeChecking.sh` | bash | Checks chain convergence for all MCMCtree runs |
+| `NMMCMCTreeSummary.8.sh` | SLURM | Summarizes posterior time trees from completed MCMCtree runs |
+| `NMMCMCTreeUncompressed.sh` | bash | Locates the uncompressed MCMCtree output archives and re-compress them using a Zip compressor |
+| `runPy.sh` | SLURM | SBATCH wrapper for `SumMCMCtree.py` |
 
 #### Python scripts
 
